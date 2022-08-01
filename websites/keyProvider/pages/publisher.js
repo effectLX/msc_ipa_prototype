@@ -1,27 +1,28 @@
 import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
+import useSWR from 'swr'
 import styles from "../components/layout.module.css";
 import utilStyles from "../styles/utils.module.css";
 
-const name = 'Advertiser #1';
+const name = 'Publisher';
 
 export default function Home() {
     return (
         <div className={styles.container}>
             <Head>
-                <link rel="icon" href="../images/ic_icon.jpg" />
                 <title>{name}</title>
+                {/*icon of webpage*/}
             </Head>
             <header className={styles.header}>
                 {(
                     <>
                         <h1 className={utilStyles.heading2Xl}>{name}</h1>
-                        <Link href={"advertiser1_thankyou"}>
+                        <Link href={"/advertiser1"}>
                             <a>
                                 <Image
                                     priority
-                                    src="/images/ic_night.jpg"
+                                    src="/images/ic_day.jpg"
                                     height={1080}
                                     width={1920}
                                     alt={name}
@@ -29,7 +30,7 @@ export default function Home() {
                             </a>
                         </Link>
                         <div className={styles.subtitle}>
-                            <h3 className={utilStyles.lightText}>This is the product preview.</h3>
+                            <h3 className={utilStyles.lightText}>This is advertisement.</h3>
                         </div>
                     </>
                 )}
