@@ -2,11 +2,11 @@ package de.antoniusstrauch.mpc.core.usecase;
 
 import de.antoniusstrauch.mpc.core.entity.Encryption;
 
-public class GetPublicKeyUC {
+public class GetPublicKey {
 
   private final Encryption decrypt;
 
-  public GetPublicKeyUC(Encryption encrypt) {
+  public GetPublicKey(Encryption encrypt) {
     this.decrypt = encrypt;
   }
 

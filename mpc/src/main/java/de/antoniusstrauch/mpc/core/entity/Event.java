@@ -1,30 +1,30 @@
 package de.antoniusstrauch.mpc.core.entity;
 
-import lombok.Getter;
+import lombok.Builder;
+import lombok.Data;
 
-@Getter
+import java.time.LocalDateTime;
+
+@Data
+@Builder
 public class Event {
 
   private final EventType type;
-  private final int matchKey;
-  private final int timestamp; // secrete shared value
+  private final Integer matchKey;
+  private final LocalDateTime timestamp;
 
-  public Event(EventType eventType, String matchKey, String timestamp) {
+  public Event(EventType eventType, Integer matchKey, LocalDateTime timestamp) {
     this.type = eventType;
-    this.matchKey = checkInputString(matchKey);
-    this.timestamp = checkInputString(timestamp);
+    this.matchKey = checkMatchKey(matchKey);
+    this.timestamp = checkTimestamp(timestamp);
   }
 
-  private int checkInputString(String strValue) {
-    if (strValue == null || strValue.length() == 0) {
-      throw new IllegalArgumentException("Value is null or empty.");
-    }
-    int value;
-    try {
-      value = Integer.parseInt(strValue);
-    } catch (NumberFormatException e) {
-      throw new IllegalArgumentException("Value is not an integer.");
-    }
-    return value;
+  private LocalDateTime checkTimestamp(LocalDateTime timestamp) {
+    return timestamp; // TODO Check timestamp
   }
+
+  private Integer checkMatchKey(Integer matchKey) {
+    return matchKey; //TODO Check MAtch key
+  }
+
 }

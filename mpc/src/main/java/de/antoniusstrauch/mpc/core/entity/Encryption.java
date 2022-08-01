@@ -1,6 +1,7 @@
 package de.antoniusstrauch.mpc.core.entity;
 
 import lombok.Getter;
+
 import java.util.Random;
 
 @Getter

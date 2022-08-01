@@ -9,7 +9,7 @@ public class PrepareJSONDictionaryUC {
 
   public PrepareJSONDictionaryUC() {}
 
-  public String runUsecase(AddEventToAdtechUC addEvent) throws JSONException {
+  public String runUsecase(AddEventToAdtech addEvent) throws JSONException {
 
     JSONArray jsonArray = new JSONArray();
 

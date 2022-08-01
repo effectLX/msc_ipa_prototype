@@ -6,12 +6,12 @@ import lombok.Getter;
 import java.util.LinkedList;
 
 @Getter
-public class AddEventToAdtechUC {
+public class AddEventToAdtech {
 
   private LinkedList<Event> eventArray = new LinkedList<>();
-  private final CheckReportTriggerUC checkReport;
+  private final CheckReportTrigger checkReport;
 
-  public AddEventToAdtechUC(CheckReportTriggerUC checkReport) {
+  public AddEventToAdtech(CheckReportTrigger checkReport) {
     this.checkReport = checkReport;
   }
 

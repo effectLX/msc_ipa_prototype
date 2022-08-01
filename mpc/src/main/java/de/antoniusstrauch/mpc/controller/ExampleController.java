@@ -2,6 +2,7 @@ package de.antoniusstrauch.mpc.controller;
 
 import de.antoniusstrauch.mpc.core.entity.Event;
 import de.antoniusstrauch.mpc.core.usecase.*;
+import de.antoniusstrauch.mpc.core.usecase.mpc.RequestAttribution;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.configurationprocessor.json.JSONArray;
 import org.springframework.boot.configurationprocessor.json.JSONException;
@@ -19,27 +20,22 @@ import java.util.LinkedList;
 @RestController
 public class ExampleController {
 
-  private final RunMPCUC runMPCUC;
-  private final GetPublicKeyUC getPublicKeyUC;
+  private final RequestAttribution requestAttribution;
+  private final GetPublicKey getPublicKey;
   private final PrepareJSONAttributionUC getJSON;
-  private final AddEventToAdtechUC addEvent;
+  private final AddEventToAdtech addEvent;
   private final PrepareJSONDictionaryUC prepareDict;
   private final PostEventsToMPCUC postEvents;
 
   @Autowired
-  public ExampleController(RunMPCUC runMPCUC, GetPublicKeyUC getPublicKeyUC, PrepareJSONAttributionUC getJSON,
-                           AddEventToAdtechUC addEvent, PrepareJSONDictionaryUC prepareDict, PostEventsToMPCUC postEvents) {
-    this.runMPCUC = runMPCUC;
-    this.getPublicKeyUC = getPublicKeyUC;
+  public ExampleController(RequestAttribution requestAttribution, GetPublicKey getPublicKey, PrepareJSONAttributionUC getJSON,
+                           AddEventToAdtech addEvent, PrepareJSONDictionaryUC prepareDict, PostEventsToMPCUC postEvents) {
+    this.requestAttribution = requestAttribution;
+    this.getPublicKey = getPublicKey;
     this.getJSON = getJSON;
     this.addEvent = addEvent;
     this.prepareDict = prepareDict;
     this.postEvents = postEvents;
-  }
-
-  @GetMapping("/info")
-  public String getInfo() {
-    return "This is an example endpoint.";
   }
 
   @CrossOrigin(origins = "http://localhost:3000")
@@ -56,20 +52,20 @@ public class ExampleController {
   }
 
   @GetMapping("/publicKey/")
-  public String getPublicKey() {return getPublicKeyUC.runUsecase();}
+  public String getPublicKey() {return getPublicKey.runUsecase();}
 
   @CrossOrigin(origins = "http://localhost:3000")
   @PostMapping(
           value = "/attribution",
           consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
   public ResponseEntity<String> postController(
-      @RequestBody LinkedList<Event> events) throws JSONException {
-    int attribution = runMPCUC.runUsecase(events);
+          @RequestBody LinkedList<Event> events) throws JSONException {
+    int attribution = requestAttribution.runUsecase(events);
     String result = getJSON.runUsecase(attribution);
 
     return new ResponseEntity(
-        result,
-        HttpStatus.OK);
+            result,
+            HttpStatus.OK);
   }
 
   // Adtech Server

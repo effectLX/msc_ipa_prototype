@@ -1,94 +1,46 @@
 package de.antoniusstrauch.mpc.config;
 
-import de.antoniusstrauch.mpc.core.entity.BlindingFactor;
-import de.antoniusstrauch.mpc.core.entity.Encryption;
-import de.antoniusstrauch.mpc.core.usecase.*;
+import de.antoniusstrauch.mpc.core.bridge.ICollectorServer;
+import de.antoniusstrauch.mpc.core.bridge.IHelperServer;
+import de.antoniusstrauch.mpc.core.bridge.ILeaderServer;
+import de.antoniusstrauch.mpc.core.usecase.helper.DecryptBlindShuffleEvents;
+import de.antoniusstrauch.mpc.core.usecase.leader.SeparateBatch;
+import de.antoniusstrauch.mpc.core.usecase.mpc.RequestAttribution;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.client.RestTemplate;
 
 @Configuration
 public class Beans {
 
   @Bean
-  public HelperAttributionUC getHelperAttribution() {
-    return new HelperAttributionUC();
+  public RestTemplate restTemplate(RestTemplateBuilder builder) {
+    return builder.build();
   }
 
   @Bean
-  public HelperBlindingUC getHelperBinding() {
-    return new HelperBlindingUC();
+  @Autowired
+  RequestAttribution getRequestAttribution(ILeaderServer leader, IHelperServer helperOne,
+                                           IHelperServer helperTwo, ICollectorServer collector) {
+    return new RequestAttribution(leader, helperOne, helperTwo, collector);
   }
 
+  //USECASES
   @Bean
-  public BlindingFactor getBlindingFactor() {
-    return new BlindingFactor();
-  }
-
-  @Bean
-  public HelperDecryptionUC getHelperDecryptionUC() {
-    return new HelperDecryptionUC();
-  }
-
-  @Bean
-  public HelperShufflingUC getHelperShufflingUC() {
-    return new HelperShufflingUC();
-  }
-
-  @Bean
-  public ServerCollectorUC getServerCollectorUC() {
-    return new ServerCollectorUC();
+  SeparateBatch getSeparateBatch() {
+    return new SeparateBatch();
   }
 
   @Bean(name = "ServerHelperOne")
-  public ServerHelperUC getServerHelperUC1() {
-    return new ServerHelperUC();
+  public DecryptBlindShuffleEvents getServerHelperUC1() {
+    return new DecryptBlindShuffleEvents();
   }
 
   @Bean(name = "ServerHelperTwo")
-  public ServerHelperUC getServerHelperUC2() {
-    return new ServerHelperUC();
+  public DecryptBlindShuffleEvents getServerHelperUC2() {
+    return new DecryptBlindShuffleEvents();
   }
 
-  @Bean
-  public ServerLeaderUC getServerLeaderUC() {
-    return new ServerLeaderUC();
-  }
-
-  @Bean
-  public Encryption getEncryption() {
-    return new Encryption();
-  }
-
-  @Bean
-  public PrepareJSONAttributionUC getJSON() { return new PrepareJSONAttributionUC(); }
-
-  @Bean
-  @Autowired
-  public RunMPCUC runMPC(ServerLeaderUC leader,
-      @Qualifier("ServerHelperOne") ServerHelperUC helperOne,
-      @Qualifier("ServerHelperTwo") ServerHelperUC helperTwo,
-      ServerCollectorUC collector, Encryption encrypt, BlindingFactor blind) {
-
-    return new RunMPCUC(leader, helperOne, helperTwo, collector, encrypt, blind);
-  }
-
-  @Bean
-  @Autowired
-  public GetPublicKeyUC getPublicKey(Encryption encrypt) {
-    return new GetPublicKeyUC(encrypt);
-  }
-
-  @Bean
-  public CheckReportTriggerUC checkReport() {return new CheckReportTriggerUC();}
-
-  @Bean
-  public PrepareJSONDictionaryUC prepareDict() {return new PrepareJSONDictionaryUC();}
-
-  @Bean
-  public PostEventsToMPCUC postEvents() {return new PostEventsToMPCUC();}
-
-  @Bean
-  public AddEventToAdtechUC addEvent(CheckReportTriggerUC checkReport) {return new AddEventToAdtechUC(checkReport);}
 }
