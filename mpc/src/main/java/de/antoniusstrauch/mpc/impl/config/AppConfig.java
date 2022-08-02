@@ -1,4 +1,4 @@
-package de.antoniusstrauch.mpc.config;
+package de.antoniusstrauch.mpc.impl.config;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -12,6 +12,6 @@ public class AppConfig {
   LeaderConfig leader;
   HelperConfig helperOne;
   HelperConfig helperTwo;
-
+  CollectorConfig collector;
 
 }

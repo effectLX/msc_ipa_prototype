@@ -2,16 +2,18 @@ package de.antoniusstrauch.mpc.core.entity;
 
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
 @Data
 @Builder
+@NoArgsConstructor
 public class Event {
 
-  private final EventType type;
-  private final Integer matchKey;
-  private final LocalDateTime timestamp;
+  private EventType type;
+  private Integer matchKey;
+  private LocalDateTime timestamp;
 
   public Event(EventType eventType, Integer matchKey, LocalDateTime timestamp) {
     this.type = eventType;
