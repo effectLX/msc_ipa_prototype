@@ -1,6 +1,7 @@
-package de.antoniusstrauch.mpc.controller;
+package de.antoniusstrauch.mpc.impl.controller;
 
 import de.antoniusstrauch.mpc.core.entity.AttributionResult;
+import de.antoniusstrauch.mpc.core.entity.EventBatch;
 import de.antoniusstrauch.mpc.core.usecase.mpc.RequestAttribution;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,8 +20,8 @@ public class MpcController {
 
 
   @PostMapping("/requestAttribution")
-  AttributionResult requestAttribution(@RequestBody RequestAttributionCommand command) {
-    return requestAttribution.runUsecase(command);
+  AttributionResult requestAttribution(@RequestBody EventBatch batch) {
+    return requestAttribution.runUsecase(batch);
   }
 
 }

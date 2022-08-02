@@ -1,4 +1,4 @@
-package de.antoniusstrauch.mpc.config;
+package de.antoniusstrauch.mpc.impl.config;
 
 import lombok.Data;
 

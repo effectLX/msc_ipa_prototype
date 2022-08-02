@@ -1,4 +1,4 @@
-package de.antoniusstrauch.mpc.controller;
+package de.antoniusstrauch.mpc.impl.controller;
 
 import de.antoniusstrauch.mpc.core.entity.EventBatch;
 import de.antoniusstrauch.mpc.core.entity.EventBatchPair;
