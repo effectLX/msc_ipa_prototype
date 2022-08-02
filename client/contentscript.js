@@ -8,7 +8,6 @@ window.addEventListener("message", function(event) {
   if (event.data.type && (event.data.type == "FETCH")) {
     let key=event.data.text;
 
-      console.log(key);
       let list=[];
       chrome.storage.local.get(['details'], function(result) {
         if(result.details){
@@ -25,29 +24,36 @@ window.addEventListener("message", function(event) {
   }
 
   // Write match key to client
+  // TODO: double load from match key provider domain
   if (event.data.type && (event.data.type == "SET")) {
     let value=event.data.text;
+    let intValue = Number(value)
+    if (!Number.isInteger(intValue) || Number.isNaN(intValue)) {
+      alert('The provided match key is no integer.');
+      return;
+    }
+
     let list=[];
     chrome.storage.local.get(['details'], function(result) {
       if(result.details){
         list=JSON.parse(result.details);
 
         let bool = true;
-        list.forEach(element => {
+        for (const element of list) {
           if(element.key==event.source.location.host){
-            element.value = value;
+            element.value = new String(value);
             element.Timestamp = new Date();
-            console.log('Value is set to ' + value);
             bool = false;
           }
-        });
+        }
 
         if (bool) {
           list.push({"key":event.source.location.host,"value":value,"Timestamp":new Date()})
-          chrome.storage.local.set({"details":JSON.stringify(list)}, function() {
-            console.log('Value is set to ' + value);
-          });
         }
+
+        chrome.storage.local.set({"details":JSON.stringify(list)}, function() {
+          console.log('Value is set to ' + value);
+        });
       }
     })
   }
