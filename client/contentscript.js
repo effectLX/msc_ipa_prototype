@@ -27,28 +27,31 @@ window.addEventListener("message", function(event) {
   // Write match key to client
   if (event.data.type && (event.data.type == "SET")) {
     let value=event.data.text;
-    console.log(value);
     let list=[];
     chrome.storage.local.get(['details'], function(result) {
-      console.log(result)
       if(result.details){
-        list=JSON.parse(result.details); 
-        list.push({"key":generateRandom(4),"value":value,"Timestamp":new Date()})
-        chrome.storage.local.set({"details":JSON.stringify(list)}, function() {
-          console.log('Value is set to ' + value);
+        list=JSON.parse(result.details);
+
+        let bool = true;
+        list.forEach(element => {
+          if(element.key==event.source.location.host){
+            element.value = value;
+            element.Timestamp = new Date();
+            console.log('Value is set to ' + value);
+            bool = false;
+          }
         });
+
+        if (bool) {
+          list.push({"key":event.source.location.host,"value":value,"Timestamp":new Date()})
+          chrome.storage.local.set({"details":JSON.stringify(list)}, function() {
+            console.log('Value is set to ' + value);
+          });
+        }
       }
     })
-}
+  }
 });
-
-function generateRandom() {
-  var chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ',
-      result=""
-  for (var i = 4; i > 0; --i)
-      result += chars[Math.round(Math.random() * (chars.length - 1))]
-  return result
-}
 
 
 

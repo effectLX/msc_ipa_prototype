@@ -4,17 +4,16 @@ document.addEventListener('DOMContentLoaded', function(e) {
     setValuesOnPanel().then(res=>{})
 
     document.getElementById("add").addEventListener("click",()=>{
-    value=document.getElementById("value").value;
+        value=document.getElementById("value").value;
         chrome.storage.local.get(['details'], function(result) {
-          console.log('Value currently is ' + result.details);
-          if(result.details){
-            list=JSON.parse(result.details);
-          }
-          list.push({"key":generateRandom(4),"value":value,"Timestamp":new Date()})
-           chrome.storage.local.set({"details":JSON.stringify(list)}, function() {
-             console.log('Value is set to ' + value);
-             setValuesOnPanel()
-           });
+            if (result.details) {
+                list = JSON.parse(result.details);
+                list.push({"key": 'custom', "value": value, "Timestamp": new Date()})
+                chrome.storage.local.set({"details": JSON.stringify(list)}, function () {
+                    console.log('Value is set to ' + value);
+                    setValuesOnPanel()
+                });
+            }
         })
     })
 
@@ -54,11 +53,3 @@ function setValuesOnPanel(){
     resolve("Data stored.")
   })
 };
-
-function generateRandom() {
-  var chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ',
-      result=""
-  for (var i = 4; i > 0; --i)
-      result += chars[Math.round(Math.random() * (chars.length - 1))]
-  return result
-}
