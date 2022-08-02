@@ -1,7 +1,7 @@
-package de.antoniusstrauch.mpc.serverImpl;
+package de.antoniusstrauch.mpc.impl.server;
 
 
-import de.antoniusstrauch.mpc.config.AppConfig;
+import de.antoniusstrauch.mpc.impl.config.AppConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,12 +19,12 @@ public class HelperServerInit {
     this.config = config;
   }
 
-  @Bean
+  @Bean(name="HelperServerOne")
   public HelperServer helperServerOne() {
     return new HelperServer(restTemplate, config.getHelperOne());
   }
 
-  @Bean
+  @Bean(name="HelperServerTwo")
   public HelperServer helperServerTwo() {
     return new HelperServer(restTemplate, config.getHelperTwo());
   }
