@@ -8,7 +8,7 @@ import java.util.LinkedList;
 @Getter
 public class AddEventToAdtech {
 
-  private LinkedList<Event> eventArray = new LinkedList<>();
+  private final LinkedList<Event> eventArray = new LinkedList<>();
   private final CheckReportTrigger checkReport;
 
   public AddEventToAdtech(CheckReportTrigger checkReport) {
