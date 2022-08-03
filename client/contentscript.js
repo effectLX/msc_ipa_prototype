@@ -6,7 +6,7 @@ window.addEventListener("message", function(event) {
 
   // Fetch match key from client
   if (event.data.type && (event.data.type == "FETCH")) {
-    let key=event.data.text;
+    let key = event.data.text;
 
       let list=[];
       chrome.storage.local.get(['details'], function(result) {
@@ -14,8 +14,10 @@ window.addEventListener("message", function(event) {
           list=JSON.parse(result.details); 
           list.forEach(element => {
             if(element.key==key){
-              // TODO: Encrypt
-              // TODO: Send to website
+              // let valueInt = Number.parseInt(element.value)
+              // let encryptedValue = encryptMatchkey(valueInt)
+              // const data = {type: "RETURN_KEY", text: encryptedValue.toString()};
+              // window.postMessage(data, "http://localhost:3000/publisher");
               alert(element.value);
             }
           });
