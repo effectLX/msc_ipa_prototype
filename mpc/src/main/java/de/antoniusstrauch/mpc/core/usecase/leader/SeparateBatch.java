@@ -4,13 +4,14 @@ import de.antoniusstrauch.mpc.core.AUsecase;
 import de.antoniusstrauch.mpc.core.entity.Event;
 import de.antoniusstrauch.mpc.core.entity.EventBatch;
 import de.antoniusstrauch.mpc.core.entity.EventBatchPair;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.LinkedList;
 
 public class SeparateBatch extends AUsecase<EventBatch, EventBatchPair> {
 
   @Override
-  public EventBatchPair runUsecase(EventBatch eventBatch) {
+  public EventBatchPair runUsecase(@NotNull EventBatch eventBatch) {
 
     LinkedList<Event> batchOne = new LinkedList<>();
     LinkedList<Event> batchTwo = new LinkedList<>();

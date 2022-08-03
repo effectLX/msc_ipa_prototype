@@ -13,6 +13,7 @@ public class Event {
 
   private EventType type;
   private Integer matchKey;
+
   private LocalDateTime timestamp;
 
   public Event(EventType eventType, Integer matchKey, LocalDateTime timestamp) {

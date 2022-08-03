@@ -1,5 +1,6 @@
 package de.antoniusstrauch.mpc.core.usecase;
 
+import org.jetbrains.annotations.Nullable;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.*;
 import org.springframework.web.client.RestTemplate;
@@ -21,7 +22,7 @@ public class PostEventsToMPCUC {
     this.restTemplate = new RestTemplateBuilder().build();
   }
 
-  public String runUsecase(String attributionRequest) {
+  public @Nullable String runUsecase(String attributionRequest) {
 
     String url = "http://localhost:3000/attribution";
 

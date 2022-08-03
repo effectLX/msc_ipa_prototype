@@ -10,8 +10,7 @@ import org.springframework.context.annotation.Configuration;
 public class AppConfig {
 
   LeaderConfig leader;
-  HelperConfig helperOne;
-  HelperConfig helperTwo;
+  HelperConfig helper;
   CollectorConfig collector;
 
 }

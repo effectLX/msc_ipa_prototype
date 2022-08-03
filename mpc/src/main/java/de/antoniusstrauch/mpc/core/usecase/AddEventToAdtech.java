@@ -1,6 +1,7 @@
 package de.antoniusstrauch.mpc.core.usecase;
 
 import de.antoniusstrauch.mpc.core.entity.Event;
+import de.antoniusstrauch.mpc.core.usecase.adtec.CheckReportTrigger;
 import lombok.Getter;
 
 import java.util.LinkedList;

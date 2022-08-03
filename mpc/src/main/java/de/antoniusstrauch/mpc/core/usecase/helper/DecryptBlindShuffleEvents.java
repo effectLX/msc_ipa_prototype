@@ -22,7 +22,7 @@ public class DecryptBlindShuffleEvents extends AUsecase<EventBatch, EventBatch> 
   }
 
   @Override
-  public EventBatch runUsecase(EventBatch eventBatch) {
+  public EventBatch runUsecase( EventBatch eventBatch) {
 
     LinkedList<Event> outputEvents = new LinkedList<>();
 
