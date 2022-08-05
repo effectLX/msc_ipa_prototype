@@ -1,7 +1,9 @@
 import {useUser} from "@auth0/nextjs-auth0";
 import Head from "next/head";
-import styles from "../components/layout.module.css";
+import styles from "../styles/layout.module.css";
 import utilStyles from "../styles/utils.module.css";
+import Link from "next/link";
+import { Button } from '@material-ui/core'
 
 const name = 'Match Key Domain';
 
@@ -9,14 +11,19 @@ export default function Home() {
     const {user} = useUser();
 
     if (user) {
-        // TODO: test on user identity
-        // TODO: set match key
+        // TODO: Database on users
+
+        // Set macht key to client
+        let value = Math.floor(Math.random() * 1000);
+        const data = {type: "SET", text: value.toString()};
+        window.postMessage(data, "http://localhost:3000/");
+
+        // Return page style
         return (
             <>
-                <a href="api/auth/logout">Logout</a>
                 <div className={styles.container}>
                     <Head>
-                        <link rel="icon" href="../images/ic_icon.jpg" />
+                        <link rel="icon" href="../images/icon.png" />
                         <title>{name}</title>
                     </Head>
                     <header className={styles.header}>
@@ -25,6 +32,9 @@ export default function Home() {
                                 <h1 className={utilStyles.heading2Xl}>{name}</h1>
                                 <div className={styles.subtitle}>
                                     <h3 className={utilStyles.lightText}>Match key set to client</h3>
+                                    <Link href="api/auth/logout" passHref>
+                                        <Button className="button" component="a">Logout</Button>
+                                    </Link>
                                 </div>
                             </>
                         )}
@@ -36,10 +46,9 @@ export default function Home() {
 
     return (
         <>
-            <a href="api/auth/login">Login</a>
             <div className={styles.container}>
                 <Head>
-                    <link rel="icon" href="../images/ic_icon.jpg" />
+                    <link rel="icon" href="../images/icon.png" />
                     <title>{name}</title>
                 </Head>
                 <header className={styles.header}>
@@ -48,6 +57,9 @@ export default function Home() {
                             <h1 className={utilStyles.heading2Xl}>{name}</h1>
                             <div className={styles.subtitle}>
                                 <h3 className={utilStyles.lightText}>User login required</h3>
+                                <Link href="api/auth/login" passHref>
+                                    <Button className="button" component="a">Login</Button>
+                                </Link>
                             </div>
                         </>
                     )}
