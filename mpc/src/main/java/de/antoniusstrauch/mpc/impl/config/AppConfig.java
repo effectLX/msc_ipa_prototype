@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Configuration;
 @Data
 public class AppConfig {
 
+  MpcConfig mpc;
   LeaderConfig leader;
   HelperConfig helper;
   CollectorConfig collector;

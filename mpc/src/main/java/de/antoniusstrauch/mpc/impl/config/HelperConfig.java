@@ -8,4 +8,5 @@ public class HelperConfig {
   String serverURL;
   Integer decryptionFactor;
   Integer blindingFactor;
+  Integer publicKey;
 }

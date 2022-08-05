@@ -1,8 +1,7 @@
 package de.antoniusstrauch.mpc.core.bridge;
 
 import de.antoniusstrauch.mpc.core.entity.EventBatch;
-
-import java.security.PublicKey;
+import de.antoniusstrauch.mpc.core.entity.PublicKey;
 
 public interface IHelperServer {
 

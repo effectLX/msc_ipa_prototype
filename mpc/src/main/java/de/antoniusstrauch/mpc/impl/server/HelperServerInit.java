@@ -24,12 +24,12 @@ public class HelperServerInit {
   }
 
   @Bean(name = "HelperServerOne")
-  public @NotNull HelperServer helperServerOne() {
+  public HelperServer helperServerOne() {
     return new HelperServer(restTemplate, config.getHelper(), gson);
   }
 
   @Bean(name = "HelperServerTwo")
-  public @NotNull HelperServer helperServerTwo() {
+  public HelperServer helperServerTwo() {
     return new HelperServer(restTemplate, config.getHelper(), gson);
   }
 }

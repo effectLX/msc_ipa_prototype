@@ -4,7 +4,6 @@ import de.antoniusstrauch.mpc.core.AUsecase;
 import de.antoniusstrauch.mpc.core.entity.Event;
 import de.antoniusstrauch.mpc.core.entity.EventBatch;
 import de.antoniusstrauch.mpc.core.entity.EventType;
-
 import java.time.LocalDateTime;
 import java.util.LinkedList;
 
@@ -22,7 +21,7 @@ public class DecryptBlindShuffleEvents extends AUsecase<EventBatch, EventBatch> 
   }
 
   @Override
-  public EventBatch runUsecase( EventBatch eventBatch) {
+  public EventBatch runUsecase(EventBatch eventBatch) {
 
     LinkedList<Event> outputEvents = new LinkedList<>();
 
@@ -34,7 +33,9 @@ public class DecryptBlindShuffleEvents extends AUsecase<EventBatch, EventBatch> 
 
       // Transform match key (decrypt, blind)
       matchKey = decryptEvents.runUsecase(matchKey);
-      matchKey = blindEvents.runUsecase(matchKey);
+
+      matchKey = blindEvents.runUsecase(BlindEventsCommand.builder().matchKey(matchKey)
+          .eventBatchPairId(eventBatch.getEventBatchPairId()).build());
 
       // Create new event and write to array of events
       Event newEvent = Event.builder().type(type).matchKey(matchKey).timestamp(timestamp).build();

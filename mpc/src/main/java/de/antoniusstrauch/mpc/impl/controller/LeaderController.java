@@ -20,7 +20,7 @@ public class LeaderController {
   }
 
   @PostMapping("/seperateBatch")
-  EventBatchPair seperateBatch(@RequestBody @NotNull EventBatch eventBatch) {
+  EventBatchPair seperateBatch(@RequestBody EventBatch eventBatch) {
     return separateBatch.runUsecase(eventBatch);
   }
 }

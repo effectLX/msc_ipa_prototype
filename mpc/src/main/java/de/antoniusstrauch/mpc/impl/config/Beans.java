@@ -11,11 +11,14 @@ import de.antoniusstrauch.mpc.core.usecase.collector.MergeBatches;
 import de.antoniusstrauch.mpc.core.usecase.helper.BlindEvents;
 import de.antoniusstrauch.mpc.core.usecase.helper.DecryptBlindShuffleEvents;
 import de.antoniusstrauch.mpc.core.usecase.helper.DecryptEvents;
+import de.antoniusstrauch.mpc.core.usecase.helper.GetPublicKey;
 import de.antoniusstrauch.mpc.core.usecase.helper.ShuffleEvents;
 import de.antoniusstrauch.mpc.core.usecase.leader.SeparateBatch;
 import de.antoniusstrauch.mpc.core.usecase.mpc.RequestAttribution;
+import de.antoniusstrauch.mpc.core.usecase.mpc.RequestPublicKey;
+import de.antoniusstrauch.mpc.impl.repository.BlindingFactorListRepository;
 import de.antoniusstrauch.mpc.impl.util.LocalDateTimeAdapter;
-import org.jetbrains.annotations.NotNull;
+import java.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.web.client.RestTemplateBuilder;
@@ -23,27 +26,24 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.client.RestTemplate;
 
-import java.time.LocalDateTime;
-
 @Configuration
 public class Beans {
 
   @Bean
-  public RestTemplate restTemplate(@NotNull RestTemplateBuilder builder) {
+  public RestTemplate restTemplate(RestTemplateBuilder builder) {
     return builder.build();
   }
 
   @Bean
-  public @NotNull Gson getGson() {
-    return new GsonBuilder().registerTypeAdapter(LocalDateTime.class,
-        new LocalDateTimeAdapter()).create();
+  public Gson getGson() {
+    return new GsonBuilder().registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter())
+        .create();
   }
 
   //USECASES
 
   @Bean
   @Autowired
-  @NotNull
   RequestAttribution getRequestAttribution(ILeaderServer leader,
       @Qualifier("HelperServerOne") IHelperServer helperOne,
       @Qualifier("HelperServerTwo") IHelperServer helperTwo, ICollectorServer collector) {
@@ -51,50 +51,61 @@ public class Beans {
   }
 
   @Bean
-  @NotNull
   SeparateBatch getSeparateBatch() {
     return new SeparateBatch();
   }
 
   @Bean
-  public @NotNull DecryptBlindShuffleEvents getServerHelperUC1(
-      DecryptEvents decryptEvents, BlindEvents blindEvents,
-      ShuffleEvents shuffleEvents) {
+  public DecryptBlindShuffleEvents getServerHelperUC1(DecryptEvents decryptEvents,
+      BlindEvents blindEvents, ShuffleEvents shuffleEvents) {
     return new DecryptBlindShuffleEvents(decryptEvents, blindEvents, shuffleEvents);
   }
 
   @Bean
   @Autowired
-  public @NotNull DecryptEvents getDecryptEvents(@NotNull AppConfig config) {
+  public DecryptEvents getDecryptEvents(AppConfig config) {
     return new DecryptEvents(config.getHelper().getDecryptionFactor());
   }
 
   @Bean
   @Autowired
-  public @NotNull BlindEvents getBlindEvents(@NotNull AppConfig config) {
-    return new BlindEvents(config.getHelper().getBlindingFactor());
+  public BlindEvents getBlindEvents(BlindingFactorListRepository blindingFactorListRepository) {
+    return new BlindEvents(blindingFactorListRepository);
   }
 
   @Bean
-  public @NotNull ShuffleEvents getShuffleEvents() {
+  public ShuffleEvents getShuffleEvents() {
     return new ShuffleEvents();
   }
 
   @Bean
   @Autowired
-  public @NotNull MergeAttributeEvents getMergeAttributeEvents(MergeBatches mergeBatches,
+  public MergeAttributeEvents getMergeAttributeEvents(MergeBatches mergeBatches,
       AttributeEvents attributeEvents) {
     return new MergeAttributeEvents(mergeBatches, attributeEvents);
   }
 
   @Bean
-  public @NotNull MergeBatches getMergeBatches() {
+  public MergeBatches getMergeBatches() {
     return new MergeBatches();
   }
 
   @Bean
-  public @NotNull AttributeEvents getAttributeEvents() {
+  public AttributeEvents getAttributeEvents() {
     return new AttributeEvents();
+  }
+
+  @Bean
+  @Autowired
+  GetPublicKey getPublicKey(AppConfig config) {
+    return new GetPublicKey(config.getHelper().getPublicKey());
+  }
+
+  @Bean
+  @Autowired
+  RequestPublicKey requestPublicKey(@Qualifier("HelperServerOne") IHelperServer helperOne,
+      @Qualifier("HelperServerTwo") IHelperServer helperTwo) {
+    return new RequestPublicKey(helperOne, helperTwo);
   }
 
 }

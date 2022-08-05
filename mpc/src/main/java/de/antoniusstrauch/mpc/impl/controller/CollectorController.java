@@ -20,7 +20,7 @@ public class CollectorController {
   }
 
   @PostMapping("/mergeAttribute")
-  public AttributionResult collect(@RequestBody @NotNull EventBatchPair pair) {
+  public AttributionResult collect(@RequestBody EventBatchPair pair) {
     return mergeAttributeEvents.runUsecase(pair);
   }
 

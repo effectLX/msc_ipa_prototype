@@ -4,14 +4,13 @@ import de.antoniusstrauch.mpc.core.AUsecase;
 import de.antoniusstrauch.mpc.core.entity.Event;
 import de.antoniusstrauch.mpc.core.entity.EventBatch;
 import de.antoniusstrauch.mpc.core.entity.EventBatchPair;
-import org.jetbrains.annotations.NotNull;
-
 import java.util.LinkedList;
+import java.util.UUID;
 
 public class SeparateBatch extends AUsecase<EventBatch, EventBatchPair> {
 
   @Override
-  public EventBatchPair runUsecase(@NotNull EventBatch eventBatch) {
+  public EventBatchPair runUsecase(EventBatch eventBatch) {
 
     LinkedList<Event> batchOne = new LinkedList<>();
     LinkedList<Event> batchTwo = new LinkedList<>();
@@ -28,9 +27,14 @@ public class SeparateBatch extends AUsecase<EventBatch, EventBatchPair> {
       }
     }
 
+    UUID eventBatchPairId = UUID.randomUUID();
+
     return EventBatchPair.builder()
-        .batchOne(EventBatch.builder().events(batchOne).build())
-        .batchTwo(EventBatch.builder().events(batchTwo).build()).build();
+        .eventBatchPairId(eventBatchPairId)
+        .batchOne(EventBatch.builder().eventBatchPairId(eventBatchPairId).events(batchOne).build())
+        .batchTwo(
+            EventBatch.builder().eventBatchPairId(eventBatchPairId).events(batchTwo).build())
+        .build();
   }
 
 }
