@@ -4,14 +4,13 @@ import de.antoniusstrauch.mpc.core.AUsecase;
 import de.antoniusstrauch.mpc.core.entity.Event;
 import de.antoniusstrauch.mpc.core.entity.EventBatch;
 import de.antoniusstrauch.mpc.core.entity.EventBatchPair;
-import org.jetbrains.annotations.NotNull;
-
 import java.util.LinkedList;
+import org.jetbrains.annotations.NotNull;
 
 public class MergeBatches extends AUsecase<EventBatchPair, EventBatch> {
 
   @Override
-  public EventBatch runUsecase(@NotNull EventBatchPair pair) {
+  public EventBatch runUsecase( EventBatchPair pair) {
 
     LinkedList<Event> events = new LinkedList<>();
     events.addAll(pair.getBatchOne().getEvents());

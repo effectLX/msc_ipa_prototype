@@ -4,43 +4,49 @@ import de.antoniusstrauch.mpc.core.AUsecase;
 import de.antoniusstrauch.mpc.core.entity.Event;
 import de.antoniusstrauch.mpc.core.entity.EventBatch;
 import de.antoniusstrauch.mpc.core.entity.EventType;
-import org.jetbrains.annotations.NotNull;
-
 import java.util.LinkedList;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class AttributeEvents extends AUsecase<EventBatch, Integer> {
 
   @Override
-  public @NotNull Integer runUsecase(@NotNull EventBatch batch) {
+  public Integer runUsecase(EventBatch batch) {
 
     LinkedList<Event> attributedEvents = new LinkedList<>(); // built-in if attributed events got relevant
+    LinkedList<Event> remainingEvents = new LinkedList<>(batch.getEvents());
     int attribution = 0;
 
     // Take a trigger event from the batch
     for (Event triggerEvent : batch.getEvents()) {
       if (triggerEvent.getType().equals(EventType.TRIGGER)) {
-      Event recentSourceEvent = null;
+        Event relevantSourceEvent = null;
 
         // Iterate through all source events from the batch
-        for (Event sourceEvent : batch.getEvents()) {
+        for (Event sourceEvent : remainingEvents) {
           if (sourceEvent.getType().equals(EventType.SOURCE)) {
 
             // Test every source event against the selected trigger event
             if (triggerEvent.getMatchKey().equals(sourceEvent.getMatchKey())
                 && triggerEvent.getTimestamp().isAfter(sourceEvent.getTimestamp())) {
-              if((recentSourceEvent == null) || (sourceEvent.getTimestamp().isAfter(recentSourceEvent.getTimestamp()))){
-                recentSourceEvent = sourceEvent;
+              if ((relevantSourceEvent == null) || (sourceEvent.getTimestamp()
+                  .isAfter(relevantSourceEvent.getTimestamp()))) {
+                relevantSourceEvent = sourceEvent;
               }
             }
           }
         }
-        if (recentSourceEvent != null) {
+        if (relevantSourceEvent != null) {
           attribution++;
           attributedEvents.add(triggerEvent);
-          attributedEvents.add(recentSourceEvent);
+          attributedEvents.add(relevantSourceEvent);
+          remainingEvents.remove(triggerEvent);
+          remainingEvents.remove(relevantSourceEvent);
         }
       }
     }
+    log.info("Attributed: " + attribution + " for " + batch.getEvents().size() + " events.");
     return attribution;
   }
 }
+

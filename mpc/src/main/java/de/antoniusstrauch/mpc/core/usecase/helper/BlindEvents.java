@@ -1,18 +1,22 @@
 package de.antoniusstrauch.mpc.core.usecase.helper;
 
 import de.antoniusstrauch.mpc.core.AUsecase;
+import de.antoniusstrauch.mpc.core.bridge.IBlindingFactorRepository;
 
-public class BlindEvents extends AUsecase<Integer, Integer> {
+public class BlindEvents extends AUsecase<BlindEventsCommand, Integer> {
 
 
-  private final Integer blindingFactor;
+  private final IBlindingFactorRepository blindingFactorRepository;
 
-  public BlindEvents(Integer blindingFactor) {
-    this.blindingFactor = blindingFactor;
+  public BlindEvents(IBlindingFactorRepository blindingFactorRepository) {
+    this.blindingFactorRepository = blindingFactorRepository;
   }
 
   @Override
-  public Integer runUsecase(Integer inputMatchKey) {
-    return inputMatchKey * blindingFactor;
+  public Integer runUsecase(BlindEventsCommand command) {
+    Integer blindingFactor = blindingFactorRepository.getBlindingFactor(
+        command.getEventBatchPairId());
+
+    return command.getMatchKey() * blindingFactor;
   }
 }
