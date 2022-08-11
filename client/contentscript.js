@@ -7,6 +7,7 @@ window.addEventListener("message", async event => {
   // Fetch match key from client
   if (event.data.type && (event.data.type === "FETCH")) {
     let publicKey = await getPublicKey("http://localhost:8080/requestPublicKey");
+    let encryptionFactor = await getEncryptionFactor("http://localhost:8080/requestPublicEncryptionFactor");
     let matchKey;
 
     let list=[];
@@ -18,8 +19,8 @@ window.addEventListener("message", async event => {
             matchKey = Number(element.value);
           }
         });
-        let encryptedMatchKey = await encryptMatchKey(publicKey, matchKey);
-        await sendEncryptedMatchKey(encryptedMatchKey);
+        let encryptionData =  await getEncryptionData(publicKey, encryptionFactor, matchKey);
+        await sendEncryptionData(encryptionData);
       }
     })
   }
@@ -66,16 +67,26 @@ async function getPublicKey(url) {
   return data.publicKey;
 }
 
-async function encryptMatchKey(publicKey, matchKey) {
-  // TODO: Randomization
-  if(matchKey === null){
-    matchKey = Math.floor(Math.random() * 1000);
-  }
-  return matchKey * publicKey;
+async function getEncryptionFactor(url) {
+  let res = await fetch(url);
+  let data = await res.json();
+  return data.publicEncryptionFactor;
 }
 
-async  function sendEncryptedMatchKey(encryptedMatchKey) {
-  var data={type: "RETURN_KEY", text:String(encryptedMatchKey)};
+async function getEncryptionData(publicKey, encryptionFactor, matchKey) {
+  let randomSecret = Math.floor(Math.random() * 4 + 1);
+  let clientKey = Math.pow(encryptionFactor, randomSecret);
+  let encryptedMatchKey = matchKey * Math.pow(publicKey, randomSecret);
+  return [clientKey, encryptedMatchKey]
+}
+
+async  function sendEncryptionData(encryptionData) {
+
+  let clientKey = encryptionData[0];
+  let encryptedMatchKey = encryptionData[1];
+  let encryptionDataJSON = {"clientKey":clientKey, "encryptedMatchKey": encryptedMatchKey}
+
+  var data={type: "RETURN_KEY", text:JSON.stringify(encryptionDataJSON)};
   window.postMessage(data, "*");
 }
 
