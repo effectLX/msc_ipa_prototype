@@ -28,7 +28,7 @@ public class AdTechController {
   private final Gson gson;
   private final RestTemplate template;
   private final AppConfig config;
-  BlockingQueue<Event> queue;
+  final BlockingQueue<Event> queue;
 
   @Autowired
   public AdTechController(Gson gson, RestTemplate template, AppConfig config) {
@@ -41,7 +41,7 @@ public class AdTechController {
 
   @PostMapping("/createEvent")
   void createEvent(@RequestBody Event event) throws InterruptedException {
-    System.out.println(event.getType().toString());
+    log.info("Component: {}, Creating event: {}", event);
     queue.put(event);
   }
 
@@ -63,8 +63,7 @@ public class AdTechController {
     headers.setContentType(MediaType.APPLICATION_JSON);
     HttpEntity<String> request = new HttpEntity<>(gson.toJson(batch), headers);
     AttributionResult attributionResult = template.postForObject(
-        config.getMpc().getServerURL() + "/requestAttribution", request,
-        AttributionResult.class);
+        config.getMpc().getServerURL() + "/requestAttribution", request, AttributionResult.class);
     if (attributionResult != null) {
       log.info("Attribution result: " + attributionResult.getResult());
     } else {

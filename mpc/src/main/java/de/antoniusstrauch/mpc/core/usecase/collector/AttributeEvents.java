@@ -8,14 +8,14 @@ import java.util.LinkedList;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class AttributeEvents extends AUsecase<EventBatch, Integer> {
+public class AttributeEvents extends AUsecase<EventBatch, Long> {
 
   @Override
-  public Integer runUsecase(EventBatch batch) {
+  public Long runUsecase(EventBatch batch) {
 
     LinkedList<Event> attributedEvents = new LinkedList<>(); // built-in if attributed events got relevant
     LinkedList<Event> remainingEvents = new LinkedList<>(batch.getEvents());
-    int attribution = 0;
+    Long attribution = 0L;
 
     // Take a trigger event from the batch
     for (Event triggerEvent : batch.getEvents()) {

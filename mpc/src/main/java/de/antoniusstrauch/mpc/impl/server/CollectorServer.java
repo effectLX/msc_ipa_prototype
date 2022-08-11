@@ -5,7 +5,6 @@ import de.antoniusstrauch.mpc.core.bridge.ICollectorServer;
 import de.antoniusstrauch.mpc.core.entity.AttributionResult;
 import de.antoniusstrauch.mpc.core.entity.EventBatchPair;
 import de.antoniusstrauch.mpc.impl.config.AppConfig;
-import org.jetbrains.annotations.Nullable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -28,7 +27,7 @@ public class CollectorServer implements ICollectorServer {
   }
 
   @Override
-  public @Nullable AttributionResult collect(EventBatchPair pair) {
+  public AttributionResult collect(EventBatchPair pair) {
     HttpHeaders headers = new HttpHeaders();
     headers.setContentType(MediaType.APPLICATION_JSON);
     HttpEntity<String> request = new HttpEntity<>(gson.toJson(pair), headers);

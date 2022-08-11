@@ -3,7 +3,6 @@ package de.antoniusstrauch.mpc.impl.server;
 
 import com.google.gson.Gson;
 import de.antoniusstrauch.mpc.impl.config.AppConfig;
-import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

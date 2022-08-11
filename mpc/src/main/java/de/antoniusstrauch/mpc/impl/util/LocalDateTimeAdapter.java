@@ -10,7 +10,6 @@ import com.google.gson.JsonSerializer;
 import java.lang.reflect.Type;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import org.jetbrains.annotations.NotNull;
 
 public class LocalDateTimeAdapter implements JsonSerializer<LocalDateTime>,
     JsonDeserializer<LocalDateTime> {

@@ -12,6 +12,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class BlindEventsCommand {
 
-  Integer matchKey;
+  Long matchKey;
   UUID eventBatchPairId;
 }

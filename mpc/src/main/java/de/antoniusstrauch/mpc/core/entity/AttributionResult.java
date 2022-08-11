@@ -11,5 +11,5 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class AttributionResult {
 
-  int result;
+  Long result;
 }

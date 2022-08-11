@@ -29,11 +29,9 @@ public class SeparateBatch extends AUsecase<EventBatch, EventBatchPair> {
 
     UUID eventBatchPairId = UUID.randomUUID();
 
-    return EventBatchPair.builder()
-        .eventBatchPairId(eventBatchPairId)
+    return EventBatchPair.builder().eventBatchPairId(eventBatchPairId)
         .batchOne(EventBatch.builder().eventBatchPairId(eventBatchPairId).events(batchOne).build())
-        .batchTwo(
-            EventBatch.builder().eventBatchPairId(eventBatchPairId).events(batchTwo).build())
+        .batchTwo(EventBatch.builder().eventBatchPairId(eventBatchPairId).events(batchTwo).build())
         .build();
   }
 

@@ -11,5 +11,5 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class PublicKey {
 
-  int publicKey;
+  Long publicKey;
 }

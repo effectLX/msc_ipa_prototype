@@ -8,17 +8,17 @@ import org.springframework.stereotype.Component;
 @Component
 public class BlindingFactorListRepository implements IBlindingFactorRepository {
 
-  private final HashMap<UUID, Integer> blindingFactors;
+  private final HashMap<UUID, Long> blindingFactors;
 
   public BlindingFactorListRepository() {
     this.blindingFactors = new HashMap<>();
   }
 
   @Override
-  public Integer getBlindingFactor(UUID eventBatchId) {
-    Integer blindingFactor = blindingFactors.get(eventBatchId);
+  public Long getBlindingFactor(UUID eventBatchId) {
+    Long blindingFactor = blindingFactors.get(eventBatchId);
     if (blindingFactor == null) {
-      blindingFactor = (int) (Math.random() * 1000);
+      blindingFactor = (long) (Math.random() * 1000);
       blindingFactors.put(eventBatchId, blindingFactor);
     }
     return blindingFactor;

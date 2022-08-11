@@ -6,7 +6,7 @@ import lombok.Data;
 public class HelperConfig {
 
   String serverURL;
-  Integer decryptionFactor;
-  Integer blindingFactor;
-  Integer publicKey;
+  Long decryptionFactor;
+  Long blindingFactor;
+  Long privateKey;
 }

@@ -6,7 +6,6 @@ import de.antoniusstrauch.mpc.core.entity.EventBatch;
 import de.antoniusstrauch.mpc.core.entity.EventBatchPair;
 import de.antoniusstrauch.mpc.impl.config.AppConfig;
 import lombok.extern.slf4j.Slf4j;
-import org.jetbrains.annotations.Nullable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -30,7 +29,7 @@ public class LeaderServer implements ILeaderServer {
   }
 
   @Override
-  public @Nullable EventBatchPair seperatedBatch(EventBatch events) {
+  public EventBatchPair seperatedBatch(EventBatch events) {
     HttpHeaders headers = new HttpHeaders();
     headers.setContentType(MediaType.APPLICATION_JSON);
     HttpEntity<String> request = new HttpEntity<>(gson.toJson(events), headers);

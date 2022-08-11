@@ -2,17 +2,18 @@ package de.antoniusstrauch.mpc.core.usecase.helper;
 
 import de.antoniusstrauch.mpc.core.AUsecase;
 
-public class DecryptEvents extends AUsecase<Integer, Integer> {
+
+public class DecryptEvents extends AUsecase<DecryptEventsCommand, Long> {
 
 
-  private final Integer decryptionFactor;
+  private final Long privateKey;
 
-  public DecryptEvents(Integer decryptionFactor) {
-    this.decryptionFactor = decryptionFactor;
+  public DecryptEvents(Long privateKey) {
+    this.privateKey = privateKey;
   }
 
   @Override
-  public Integer runUsecase(Integer inputMatchKey) {
-    return inputMatchKey / decryptionFactor;
+  public Long runUsecase(DecryptEventsCommand command) {
+    return command.getInputMatchKey() / (long) Math.pow(command.getClientKey(), privateKey);
   }
 }

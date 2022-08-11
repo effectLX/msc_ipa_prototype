@@ -5,6 +5,7 @@ import com.google.gson.GsonBuilder;
 import de.antoniusstrauch.mpc.core.bridge.ICollectorServer;
 import de.antoniusstrauch.mpc.core.bridge.IHelperServer;
 import de.antoniusstrauch.mpc.core.bridge.ILeaderServer;
+import de.antoniusstrauch.mpc.core.bridge.IMpcServer;
 import de.antoniusstrauch.mpc.core.usecase.collector.AttributeEvents;
 import de.antoniusstrauch.mpc.core.usecase.collector.MergeAttributeEvents;
 import de.antoniusstrauch.mpc.core.usecase.collector.MergeBatches;
@@ -15,6 +16,7 @@ import de.antoniusstrauch.mpc.core.usecase.helper.GetPublicKey;
 import de.antoniusstrauch.mpc.core.usecase.helper.ShuffleEvents;
 import de.antoniusstrauch.mpc.core.usecase.leader.SeparateBatch;
 import de.antoniusstrauch.mpc.core.usecase.mpc.RequestAttribution;
+import de.antoniusstrauch.mpc.core.usecase.mpc.RequestPublicEncryptionFactor;
 import de.antoniusstrauch.mpc.core.usecase.mpc.RequestPublicKey;
 import de.antoniusstrauch.mpc.impl.repository.BlindingFactorListRepository;
 import de.antoniusstrauch.mpc.impl.util.LocalDateTimeAdapter;
@@ -44,14 +46,14 @@ public class Beans {
 
   @Bean
   @Autowired
-  RequestAttribution getRequestAttribution(ILeaderServer leader,
+  public RequestAttribution getRequestAttribution(ILeaderServer leader,
       @Qualifier("HelperServerOne") IHelperServer helperOne,
       @Qualifier("HelperServerTwo") IHelperServer helperTwo, ICollectorServer collector) {
     return new RequestAttribution(leader, helperOne, helperTwo, collector);
   }
 
   @Bean
-  SeparateBatch getSeparateBatch() {
+  public SeparateBatch getSeparateBatch() {
     return new SeparateBatch();
   }
 
@@ -64,7 +66,7 @@ public class Beans {
   @Bean
   @Autowired
   public DecryptEvents getDecryptEvents(AppConfig config) {
-    return new DecryptEvents(config.getHelper().getDecryptionFactor());
+    return new DecryptEvents(config.getHelper().getPrivateKey());
   }
 
   @Bean
@@ -97,8 +99,8 @@ public class Beans {
 
   @Bean
   @Autowired
-  GetPublicKey getPublicKey(AppConfig config) {
-    return new GetPublicKey(config.getHelper().getPublicKey());
+  GetPublicKey getPublicKey(AppConfig config, IMpcServer mpcServer) {
+    return new GetPublicKey(config.getHelper().getPrivateKey(), mpcServer);
   }
 
   @Bean
@@ -106,6 +108,11 @@ public class Beans {
   RequestPublicKey requestPublicKey(@Qualifier("HelperServerOne") IHelperServer helperOne,
       @Qualifier("HelperServerTwo") IHelperServer helperTwo) {
     return new RequestPublicKey(helperOne, helperTwo);
+  }
+
+  @Bean
+  RequestPublicEncryptionFactor getRequestPublicEncryptionFactor() {
+    return new RequestPublicEncryptionFactor();
   }
 
 }

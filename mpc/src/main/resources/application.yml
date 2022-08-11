@@ -5,8 +5,7 @@ mpc:
     serverURL: http://127.0.0.1:8080
   helper:
     serverURL: http://127.0.0.1:8080
-    decryptionFactor: 2
     blindingFactor: 3
-    publicKey: 50
+    privateKey: 2
   collector:
     serverURL: http://127.0.0.1:8080

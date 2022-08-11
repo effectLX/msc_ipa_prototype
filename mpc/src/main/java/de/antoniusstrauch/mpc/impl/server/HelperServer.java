@@ -5,7 +5,6 @@ import de.antoniusstrauch.mpc.core.bridge.IHelperServer;
 import de.antoniusstrauch.mpc.core.entity.EventBatch;
 import de.antoniusstrauch.mpc.core.entity.PublicKey;
 import de.antoniusstrauch.mpc.impl.config.HelperConfig;
-import org.jetbrains.annotations.Nullable;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -25,7 +24,7 @@ public class HelperServer implements IHelperServer {
   }
 
   @Override
-  public @Nullable EventBatch decryptBlindShuffle(EventBatch batch) {
+  public EventBatch decryptBlindShuffle(EventBatch batch) {
     HttpHeaders headers = new HttpHeaders();
     headers.setContentType(MediaType.APPLICATION_JSON);
     HttpEntity<String> request = new HttpEntity<>(gson.toJson(batch), headers);
@@ -35,7 +34,6 @@ public class HelperServer implements IHelperServer {
 
   @Override
   public PublicKey getPublicKey() {
-    HttpHeaders headers = new HttpHeaders();
     return template.getForObject(config.getServerURL() + "/getPublicKey", PublicKey.class);
   }
 }
