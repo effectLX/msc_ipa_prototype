@@ -3,7 +3,6 @@ import styles from "../styles/layout.module.css";
 import utilStyles from "../styles/utils.module.css";
 import {useEffect} from "react";
 import moment from "moment";
-import {fromJson} from "@auth0/nextjs-auth0/dist/session";
 
 const name = 'Publisher 1';
 

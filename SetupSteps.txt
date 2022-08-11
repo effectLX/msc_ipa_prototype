@@ -1,0 +1,5 @@
+// Copy repo
+// Run Build of MPC Maven project
+// Add GSON Lib to project structure
+// Run Next Build (websites)
+// Install next moment (pub/adv)
