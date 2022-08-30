@@ -1,95 +1,31 @@
-import {useUser} from "@auth0/nextjs-auth0";
-import Head from "next/head";
 import styles from "../styles/layout.module.css";
 import utilStyles from "../styles/utils.module.css";
 import Link from "next/link";
-import { Button } from '@material-ui/core'
-import {useEffect} from "react";
+import { Button } from "@material-ui/core";
 
-const name = 'Match Key Domain';
+const title = "IPA Prototype";
+const subtitle = "M.Sc. Computing Individual Project";
 
 export default function Home() {
-    const {user} = useUser();
-        useEffect(async () => {
-            if (user) {
-                // Set macht key to client
-                let matchKey = await requestMatchKey(user.email);
-                const data = {type: "SET", text: matchKey};
-                window.postMessage(data, "http://localhost:3000/");
-            }
-        });
+  return (
+      <div className={styles.container}>
+        <header className={styles.header}>
+              <h1 className={utilStyles.heading2Xl}>{title}</h1>
+              <h1 className={utilStyles.headingXl}>{subtitle}</h1>
+              <div>
+                  <h3 className={utilStyles.lightText}>Abstract</h3>
+                  <p>It is undoubtedly that online advertising has a place on the Internet, helping to finance various free-of-charge services. However, the underlying mechanisms for web tracking of users and performance measurement of advertising allow for the high vulnerability of privacy. Therefore, discussions are increasingly focused on how online advertising can work in a privacy-preserving manner. In this report, the authors look at three proposals for possible attribution systems from Apple, Google, and Meta/Mozilla designed to avoid third-party cookies. First, a summary of the current state of knowledge about the proposal development and the main differences in the technical design choices concerning privacy and utility is provided. Especially the Interoperable Private Attribution proposal offers a broad concept to balance industry and privacy interests using a server-sided multi-party computing environment (MPC) for the attribution. Second, an analysis of the IPA's attack space reveals a potential security threat to the protocol, which enables a malicious server within the MPC to leak sensitive user data. This way, the intended privacy preservation of the protocol can be bypassed. Lastly, the first functioning prototype of the IPA proposal is developed to facilitate future discussions on the concept by providing a demonstration and testing environment.</p>
 
-        if (user) {
-            // Return page style
-            return (
-                <>
-                    <div className={styles.container}>
-                        <Head>
-                            <link rel="icon" href="../images/icon.png"/>
-                            <title>{name}</title>
-                        </Head>
-                        <header className={styles.header}>
-                            {(
-                                <>
-                                    <h1 className={utilStyles.heading2Xl}>{name}</h1>
-                                    <div className={styles.subtitle}>
-                                        <h3 className={utilStyles.lightText}>Match key set to client</h3>
-                                        <Link href="api/auth/logout" passHref>
-                                            <Button className="button">Logout</Button>
-                                        </Link>
-                                    </div>
-                                </>
-                            )}
-                        </header>
-                    </div>
-                </>
-            )
-        }
+                  <h3 className={utilStyles.lightText}>Source code repository</h3>
+                  <Link href="https://github.com/effectLX/msc_ipa_prototype" passHref><Button className="button" variant="outlined">GitHub Repository</Button></Link>
 
-    return (
-        <>
-            <div className={styles.container}>
-                <Head>
-                    <link rel="icon" href="../images/icon.png"/>
-                    <title>{name}</title>
-                </Head>
-                <header className={styles.header}>
-                    {(
-                        <>
-                            <h1 className={utilStyles.heading2Xl}>{name}</h1>
-                            <div className={styles.subtitle}>
-                                <h3 className={utilStyles.lightText}>User login required</h3>
-                                <Link href="api/auth/login" passHref>
-                                    <Button className="button" component="a">Login</Button>
-                                </Link>
-                            </div>
-                        </>
-                    )}
-                </header>
-            </div>
-        </>
-    )
-}
-
-async function requestMatchKey(userCredentials){
-
-    let matchKey;
-    // TODO: make POST to publisher flexible
-
-    const requestOptions = {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: userCredentials
-    };
-    await fetch('http://localhost:8080/getMatchKey', requestOptions)
-        .then((response) => response.json())
-        .then((data) => {
-            console.log('Success:', data);
-            matchKey = data;
-        })
-        .catch((error) => {
-            console.error('Error:', error);
-        });
-
-    return matchKey;
+                  <h3 className={utilStyles.lightText}>Prototype demonstration</h3>
+                  <Link href="/matchkeyprovider" passHref><Button className="button" variant="outlined">Match Key Provider</Button></Link> {""}
+                  <Link href="/pub" passHref><Button className="button" variant="outlined">Publisher</Button></Link> {""}
+                  <Link href="/adv" passHref><Button className="button" variant="outlined">Advertiser</Button></Link> {""}
+                  <Link href="/adtech" passHref><Button className="button" variant="outlined">Adtech</Button></Link>
+              </div>
+        </header>
+      </div>
+  );
 }
