@@ -12,6 +12,5 @@ public class AppConfig {
   MpcConfig mpc;
   LeaderConfig leader;
   HelperConfig helper;
-  CollectorConfig collector;
 
 }

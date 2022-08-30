@@ -7,6 +7,5 @@ public class HelperConfig {
 
   String serverURL;
   Long decryptionFactor;
-  Long blindingFactor;
   Long privateKey;
 }

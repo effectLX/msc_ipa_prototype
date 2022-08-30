@@ -11,9 +11,7 @@ data:
         serverURL: http://leader.default
       helperOne:
         serverURL: http://helperone.default
-        blindingFactor: 3
         privateKey: 2
       helperTwo:
         serverURL: http://helpertwo.default
-        blindingFactor: 3
         privateKey: 2
