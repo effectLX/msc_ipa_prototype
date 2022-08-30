@@ -1,0 +1,9 @@
+mpc:
+  mpc:
+    serverURL: http://127.0.0.1:8080
+  leader:
+    serverURL: http://127.0.0.1:8080
+  helper:
+    serverURL: http://127.0.0.1:8080
+    blindingFactor: 3
+    privateKey: 2
