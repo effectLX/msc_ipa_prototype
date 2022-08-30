@@ -1,3 +1,6 @@
+// PAGE ONLY FOR SIMULATION
+// It is not intended that the adtech would reveal its events publicly
+
 import styles from "../styles/layout.module.css";
 import utilStyles from "../styles/utils.module.css";
 import { Button } from "@material-ui/core";

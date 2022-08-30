@@ -13,6 +13,9 @@ public class AttributeEvents extends AUsecase<EventBatch, Long> {
   @Override
   public Long runUsecase(EventBatch batch) {
 
+    // Attribution based on last touch mode
+    // Prototype does not include sum/avg on event's trigger values, to be added
+
     LinkedList<Event> attributedEvents = new LinkedList<>(); // built-in if attributed events got relevant
     LinkedList<Event> remainingEvents = new LinkedList<>(batch.getEvents());
     Long attribution = 0L;

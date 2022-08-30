@@ -12,6 +12,8 @@ import org.mockito.Mockito;
 
 class BlindEventsTest {
 
+  // Exemplary test, to be extended for every use case
+
   private BlindEvents blindEvents;
   private UUID eventBatchPairId;
 

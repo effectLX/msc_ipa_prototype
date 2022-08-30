@@ -14,6 +14,7 @@ public class BlindingFactorListRepository implements IBlindingFactorRepository {
     this.blindingFactors = new HashMap<>();
   }
 
+  // Assumption of blinding factor between 0-1000
   @Override
   public Long getBlindingFactor(UUID eventBatchId) {
     Long blindingFactor = blindingFactors.get(eventBatchId);

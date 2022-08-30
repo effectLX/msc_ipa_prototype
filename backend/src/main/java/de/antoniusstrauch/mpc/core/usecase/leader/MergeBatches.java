@@ -11,6 +11,7 @@ public class MergeBatches extends AUsecase<EventBatchPair, EventBatch> {
   @Override
   public EventBatch runUsecase(EventBatchPair pair) {
 
+    // Merge of batches assumed given leader server role (opaque definition in architecture)
     LinkedList<Event> events = new LinkedList<>();
     events.addAll(pair.getBatchOne().getEvents());
     events.addAll(pair.getBatchTwo().getEvents());

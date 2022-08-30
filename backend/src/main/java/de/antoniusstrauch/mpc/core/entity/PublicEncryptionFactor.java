@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class PublicEncryptionFactor {
 
+  // Simplified assumption, protocol proposes ElGamal encryption using Elliptic Curves
   Long publicEncryptionFactor;
 
 }

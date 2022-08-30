@@ -27,6 +27,7 @@ public class LeaderController {
     return separateBatch.runUsecase(eventBatch);
   }
 
+  // Task currently expected with Leader Server, however protocol is opaque on final MPC architecture
   @PostMapping("/mergeAttribute")
   public AttributionResult collect(@RequestBody EventBatchPair pair) {
     return mergeAttributeEvents.runUsecase(pair);

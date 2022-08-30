@@ -14,6 +14,7 @@ public class RequestPublicKey extends AUsecase<Void, PublicKey> {
     this.helperServerTwo = helperServerTwo;
   }
 
+  // Threshold encryption based on pure multiplication of keys, to be improved
   @Override
   public PublicKey runUsecase(Void unused) {
     PublicKey publicKeyOne = helperServerOne.getPublicKey();

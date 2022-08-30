@@ -22,6 +22,7 @@ public class MpcController {
   private final RequestPublicKey requestPublicKey;
   private final RequestPublicEncryptionFactor requestPublicEncryptionFactor;
 
+  // MPC server not proposed in the protocol, but added for simplification
   @Autowired
   public MpcController(RequestAttribution requestAttribution, RequestPublicKey requestPublicKey,
       RequestPublicEncryptionFactor requestPublicEncryptionFactor) {
@@ -30,17 +31,18 @@ public class MpcController {
     this.requestPublicEncryptionFactor = requestPublicEncryptionFactor;
   }
 
-
   @PostMapping("/requestAttribution")
   AttributionResult requestAttribution(@RequestBody EventBatch batch) {
     return requestAttribution.runUsecase(batch);
   }
 
+  // Protocol does not clearly define, which server will take this task
   @GetMapping("/requestPublicKey")
   PublicKey getPublicKey() {
     return requestPublicKey.runUsecase(null);
   }
 
+  // Protocol does not clearly define, which server will take this task
   @GetMapping("/requestPublicEncryptionFactor")
   PublicEncryptionFactor requestPublicEncryptionFactor() {
     return requestPublicEncryptionFactor.runUsecase(null);

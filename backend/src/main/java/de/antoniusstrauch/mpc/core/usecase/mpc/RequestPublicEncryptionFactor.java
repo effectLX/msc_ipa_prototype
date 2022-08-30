@@ -7,6 +7,7 @@ public class RequestPublicEncryptionFactor extends AUsecase<Void, PublicEncrypti
 
   private final Long publicEncryptionFactor;
 
+  // Assumption, that encryption factor is between 2-5
   public RequestPublicEncryptionFactor() {
     this.publicEncryptionFactor = (long) (Math.random() * 3 + 2);
   }

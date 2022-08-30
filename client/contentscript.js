@@ -1,18 +1,18 @@
+// Event listener for every client call
 window.addEventListener("message", async event => {
 
-  // Accept messages from this web context only
   if (event.source !== window)
     return;
 
-  // Fetch match key from client
+  // Client FETCH API
   if (event.data.type && (event.data.type === "FETCH")) {
     let matchKey;
 
-    // DEPLOYED USE
+    // Deployed use only
     let publicKey = await getPublicKey("https://mpc.v3e.org/requestPublicKey");
     let encryptionFactor = await getEncryptionFactor("https://mpc.v3e.org/requestPublicEncryptionFactor");
 
-    // LOCAL USE
+    // local use only
     // let publicKey = await getPublicKey("http://localhost:8080/requestPublicKey");
     // let encryptionFactor = await getEncryptionFactor("http://localhost:8080/requestPublicEncryptionFactor");
 
@@ -26,17 +26,17 @@ window.addEventListener("message", async event => {
             matchKey = Number(element.value);
           }});
 
+        // Random match key, if client has no match key
         if(!matchKey){
           matchKey = Math.floor(Math.random() * 100 + 1);
         }
-            console.log('Match Key fetched: ' + matchKey);
-            let encryptionData =  await getEncryptionData(publicKey, encryptionFactor, matchKey);
-            await sendEncryptionData(encryptionData);
+        let encryptionData =  await getEncryptionData(publicKey, encryptionFactor, matchKey);
+        await sendEncryptionData(encryptionData);
       }
     })
   }
 
-  // Write match key to client
+  // Client SET API
   if (event.data.type && (event.data.type === "SET")) {
     let value=event.data.text;
     let intValue = Number(value)
@@ -64,7 +64,6 @@ window.addEventListener("message", async event => {
         }
 
         chrome.storage.local.set({"details":JSON.stringify(list)}, function() {
-          console.log('Value is set to ' + value);
           alert("Match Key '" + value + "' set to the client from current website.")
         });
       }
@@ -85,9 +84,14 @@ async function getEncryptionFactor(url) {
 }
 
 async function getEncryptionData(publicKey, encryptionFactor, matchKey) {
-  let randomSecret = Math.floor(Math.random() * 4 + 1);
+  // Assumption of client random secret between 1-5
+  // See project report for detailed explanation on simplified approach to encryption
+  let randomSecret = Math.floor(Math.random() * 5 + 1);
   let clientKey = Math.pow(encryptionFactor, randomSecret);
   let encryptedMatchKey = matchKey * Math.pow(publicKey, randomSecret);
+  // Console log not visible in actual IPA API
+  console.log("publicKey: " + publicKey + " | encFac: " + encryptionFactor + " | matchKey: " + matchKey + " | rSec: " +
+      randomSecret + " | clientKey: " + clientKey + " | encMatchKey: " + encryptedMatchKey);
   return [clientKey, encryptedMatchKey]
 }
 

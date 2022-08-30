@@ -12,6 +12,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Event {
 
+  // Secret shares for numerical values to be added
+  // Tigger value to be added
   private EventType type;
   private Long matchKey;
   private Long clientKey;

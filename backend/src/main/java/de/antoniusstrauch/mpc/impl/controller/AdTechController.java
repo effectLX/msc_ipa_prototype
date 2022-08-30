@@ -48,18 +48,19 @@ public class AdTechController {
     queue.put(event);
   }
 
-  //ONLY FOR DEMONSTRATION PUROPSE
+  // No proposed end point, only for demonstration
   @GetMapping("/getLastAttributionResult")
   AttributionResult getLastAttributionResult() {
     return this.attributionResult;
   }
 
-  //ONLY FOR DEMONSTRATION PUROPSE
+  // No proposed end point, only for demonstration
   @GetMapping("/getCurrentQueue")
   BlockingQueue<Event> getCurrentQueue() {
     return queue;
   }
 
+  // Batch size undefined, adtech can freely decide when to attributed (to be improved)
   @GetMapping("/checkAndSendEvents")
   void checkAndSendEvents() throws InterruptedException {
     LinkedList<Event> events = new LinkedList<>();

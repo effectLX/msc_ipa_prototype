@@ -15,6 +15,8 @@ public class GetPublicKey extends AUsecase<Void, PublicKey> {
     this.mpcServer = mpcServer;
   }
 
+  // Simplification, protocol proposes ElGamal encryption
+  // Prototype uses simplified encryption based on explanation in project report (see Analysis on IPA Attack Space)
   @Override
   public PublicKey runUsecase(Void unused) {
     PublicEncryptionFactor publicEncryptionFactor = mpcServer.requestPublicEncryptionFactor();

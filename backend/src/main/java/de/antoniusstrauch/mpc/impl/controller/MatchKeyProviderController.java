@@ -18,7 +18,7 @@ public class MatchKeyProviderController {
     this.matchKeys = new HashMap<>();
   }
 
-
+  // Simplified database for match key provider
   @PostMapping("/getMatchKey")
   public String getMatchKey(@RequestBody String email) {
     if (matchKeys.containsKey(email)) {

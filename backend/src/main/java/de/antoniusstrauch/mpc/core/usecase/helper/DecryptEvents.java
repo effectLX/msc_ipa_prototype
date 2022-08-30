@@ -12,6 +12,8 @@ public class DecryptEvents extends AUsecase<DecryptEventsCommand, Long> {
     this.privateKey = privateKey;
   }
 
+  // Simplification, protocol proposes ElGamal encryption
+  // Prototype encryption based on explanation in project report (see Analysis on IPA attack space)
   @Override
   public Long runUsecase(DecryptEventsCommand command) {
     return command.getInputMatchKey() / (long) Math.pow(command.getClientKey(), privateKey);
