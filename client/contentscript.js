@@ -9,12 +9,12 @@ window.addEventListener("message", async event => {
     let matchKey;
 
     // DEPLOYED USE
-    // let publicKey = await getPublicKey("https://mpc.v3e.org/requestPublicKey");
-    // let encryptionFactor = await getEncryptionFactor("https://mpc.v3e.org/requestPublicEncryptionFactor");
+    let publicKey = await getPublicKey("https://mpc.v3e.org/requestPublicKey");
+    let encryptionFactor = await getEncryptionFactor("https://mpc.v3e.org/requestPublicEncryptionFactor");
 
     // LOCAL USE
-    let publicKey = await getPublicKey("http://localhost:8080/requestPublicKey");
-    let encryptionFactor = await getEncryptionFactor("http://localhost:8080/requestPublicEncryptionFactor");
+    // let publicKey = await getPublicKey("http://localhost:8080/requestPublicKey");
+    // let encryptionFactor = await getEncryptionFactor("http://localhost:8080/requestPublicEncryptionFactor");
 
     let list=[];
     chrome.storage.local.get(['details'], async result => {
@@ -60,7 +60,7 @@ window.addEventListener("message", async event => {
         }
 
         if (bool) {
-          list.push({"key":event.source.origin + "/","value":value,"Timestamp":new Date()})
+          list.push({"key":event.source.origin,"value":value,"Timestamp":new Date()})
         }
 
         chrome.storage.local.set({"details":JSON.stringify(list)}, function() {

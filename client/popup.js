@@ -12,39 +12,6 @@ document.addEventListener('DOMContentLoaded', function(e) {
     let list=[];
     setValuesOnPanel().then(res=>{})
 
-    // document.getElementById("add").addEventListener("click",()=>{
-    //     value=document.getElementById("value").value;
-    //
-    //     if (!Number.isInteger(parseInt(value))) {
-    //         alert('The provided match key is no integer.');
-    //         return;
-    //     }
-    //
-    //     chrome.storage.local.get(['details'], function(result) {
-    //         if (result.details) {
-    //             list = JSON.parse(result.details);
-    //
-    //             let bool = true;
-    //             for (const element of list) {
-    //                 if(element.key=='custom'){
-    //                     element.value = new String(value);
-    //                     element.Timestamp = new Date();
-    //                     bool = false;
-    //                 }
-    //             }
-    //
-    //             if (bool) {
-    //                 list.push({"key": 'custom', "value": value, "Timestamp": new Date()})
-    //             }
-    //
-    //             chrome.storage.local.set({"details": JSON.stringify(list)}, function () {
-    //                 console.log('Value is set to ' + value);
-    //                 setValuesOnPanel()
-    //             });
-    //         }
-    //     })
-    // })
-
     document.getElementById("clear").addEventListener("click",()=>{
         list.splice(0,list.length);
         chrome.storage.local.set({"details":JSON.stringify(list)}, function() {
@@ -80,4 +47,4 @@ function setValuesOnPanel(){
             }});
         resolve("Data stored.")
     })
-};
+}
