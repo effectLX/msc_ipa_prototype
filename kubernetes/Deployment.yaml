@@ -1,0 +1,223 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: adtech
+  labels:
+    app: adtech
+spec:
+  selector:
+    matchLabels:
+      app: adtech
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: adtech
+    spec:
+      containers:
+        - name: mpc-app
+          image: europe-west1-docker.pkg.dev/msc-ipa/ipa/ipa-app:latest
+          imagePullPolicy: Always
+          ports:
+            - name: web
+              containerPort: 8080
+          volumeMounts:
+            - name: config-vol
+              mountPath: /config
+      volumes:
+        - name: config-vol
+          configMap:
+            name: default-config
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: matchkeyprovider
+  labels:
+    app: matchkeyprovider
+spec:
+  selector:
+    matchLabels:
+      app: matchkeyprovider
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: matchkeyprovider
+    spec:
+      containers:
+        - name: mpc-app
+          image: europe-west1-docker.pkg.dev/msc-ipa/ipa/ipa-app:latest
+          imagePullPolicy: Always
+          ports:
+            - name: web
+              containerPort: 8080
+          volumeMounts:
+            - name: config-vol
+              mountPath: /config
+      volumes:
+        - name: config-vol
+          configMap:
+            name: default-config
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mpc
+  labels:
+    app: mpc
+spec:
+  selector:
+    matchLabels:
+      app: mpc
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: mpc
+    spec:
+      containers:
+        - name: mpc-app
+          image: europe-west1-docker.pkg.dev/msc-ipa/ipa/ipa-app:latest
+          imagePullPolicy: Always
+          ports:
+            - name: web
+              containerPort: 8080
+          volumeMounts:
+            - name: config-vol
+              mountPath: /config
+      volumes:
+        - name: config-vol
+          configMap:
+            name: default-config
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: leader
+  labels:
+    app: leader
+spec:
+  selector:
+    matchLabels:
+      app: leader
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: leader
+    spec:
+      containers:
+        - name: mpc-app
+          image: europe-west1-docker.pkg.dev/msc-ipa/ipa/ipa-app:latest
+          imagePullPolicy: Always
+          ports:
+            - name: web
+              containerPort: 8080
+          volumeMounts:
+            - name: config-vol
+              mountPath: /config
+      volumes:
+        - name: config-vol
+          configMap:
+            name: default-config
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: helperone
+  labels:
+    app: helperone
+spec:
+  selector:
+    matchLabels:
+      app: helperone
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: helperone
+    spec:
+      containers:
+        - name: mpc-app
+          image: europe-west1-docker.pkg.dev/msc-ipa/ipa/ipa-app:latest
+          imagePullPolicy: Always
+          ports:
+            - name: web
+              containerPort: 8080
+          volumeMounts:
+            - name: config-vol
+              mountPath: /config
+      volumes:
+        - name: config-vol
+          configMap:
+            name: default-config
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: helpertwo
+  labels:
+    app: helpertwo
+spec:
+  selector:
+    matchLabels:
+      app: helpertwo
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: helpertwo
+    spec:
+      containers:
+        - name: mpc-app
+          image: europe-west1-docker.pkg.dev/msc-ipa/ipa/ipa-app:latest
+          imagePullPolicy: Always
+          ports:
+            - name: web
+              containerPort: 8080
+          volumeMounts:
+            - name: config-vol
+              mountPath: /config
+      volumes:
+        - name: config-vol
+          configMap:
+            name: default-config
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: simulation
+  labels:
+    app: simulation
+spec:
+  selector:
+    matchLabels:
+      app: simulation
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: simulation
+    spec:
+      containers:
+        - name: mpc-frondend
+          image: europe-west1-docker.pkg.dev/msc-ipa/ipa/ipa-frondend:latest
+          imagePullPolicy: Always
+          ports:
+            - name: web
+              containerPort: 3000

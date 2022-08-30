@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: default-config
+data:
+  mpc-application-embedd.yaml: |-
+    mpc:
+      mpc:
+        serverURL: http://mpc.default
+      leader:
+        serverURL: http://leader.default
+      helperOne:
+        serverURL: http://helperone.default
+        blindingFactor: 3
+        privateKey: 2
+      helperTwo:
+        serverURL: http://helpertwo.default
+        blindingFactor: 3
+        privateKey: 2

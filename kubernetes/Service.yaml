@@ -1,0 +1,105 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: adtech
+  labels:
+    app: adtech
+  annotations:
+    cloud.google.com/backend-config: '{"default": "msc-backendconfig"}'
+spec:
+  ports:
+    - name: web
+      port: 80
+      targetPort: 8080
+  selector:
+    app: adtech
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: matchkeyprovider
+  labels:
+    app: matchkeyprovider
+  annotations:
+    cloud.google.com/backend-config: '{"default": "msc-backendconfig"}'
+spec:
+  ports:
+    - name: web
+      port: 80
+      targetPort: 8080
+  selector:
+    app: matchkeyprovider
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: simulation
+  labels:
+    app: simulation
+  annotations:
+    cloud.google.com/backend-config: '{"default": "msc-frondendconfig"}'
+spec:
+  ports:
+    - name: web
+      port: 80
+      targetPort: 3000
+  selector:
+    app: simulation
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mpc
+  labels:
+    app: mpc
+  annotations:
+    cloud.google.com/backend-config: '{"default": "msc-backendconfig"}'
+spec:
+  ports:
+    - name: web
+      port: 80
+      targetPort: 8080
+  selector:
+    app: mpc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: leader
+  labels:
+    app: leader
+spec:
+  ports:
+    - name: web
+      port: 80
+      targetPort: 8080
+  selector:
+    app: leader
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: helperone
+  labels:
+    app: helperone
+spec:
+  ports:
+    - name: web
+      port: 80
+      targetPort: 8080
+  selector:
+    app: helperone
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: helpertwo
+  labels:
+    app: helpertwo
+spec:
+  ports:
+    - name: web
+      port: 80
+      targetPort: 8080
+  selector:
+    app: helpertwo

@@ -1,0 +1,52 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: mpcingress
+  labels:
+    app: mpcingress
+  annotations:
+    networking.gke.io/managed-certificates: mpc-cert
+    kubernetes.io/ingress.class: "gce"
+    kubernetes.io/ingress.global-static-ip-name: mpc
+spec:
+  rules:
+    - host: adtech.v3e.org
+      http:
+        paths:
+          - path: /*
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: adtech
+                port:
+                  number: 80
+    - host: matchkeyprovider.v3e.org
+      http:
+        paths:
+            - path: /*
+              pathType: ImplementationSpecific
+              backend:
+                service:
+                  name: matchkeyprovider
+                  port:
+                    number: 80
+    - host: mpc.v3e.org
+      http:
+        paths:
+            - path: /*
+              pathType: ImplementationSpecific
+              backend:
+                service:
+                  name: mpc
+                  port:
+                    number: 80
+    - host: simulation.v3e.org
+      http:
+        paths:
+            - path: /*
+              pathType: ImplementationSpecific
+              backend:
+                service:
+                  name: simulation
+                  port:
+                    number: 80
