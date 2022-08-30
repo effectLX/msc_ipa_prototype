@@ -1,6 +1,6 @@
 {
   "name": "IPA Prototype (MSc Project)",
-  "description": "This is a raw implementation of the current Interoperable Private Attribution (IPA) proposal by Mozilla and Meta. The chrome extension serves as the browser-sided API to participate in the attribution system.",
+  "description": "This is a prototype implementation of the Interoperable Private Attribution (IPA) proposal by Mozilla and Meta published in January 2022. The chrome extension serves as the browser-sided API to participate in the attribution system.",
   "version": "1.0",
   "manifest_version": 3,
   "background": {

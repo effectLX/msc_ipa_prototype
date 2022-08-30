@@ -6,27 +6,37 @@ window.addEventListener("message", async event => {
 
   // Fetch match key from client
   if (event.data.type && (event.data.type === "FETCH")) {
+    let matchKey;
+
+    // DEPLOYED USE
+    // let publicKey = await getPublicKey("https://mpc.v3e.org/requestPublicKey");
+    // let encryptionFactor = await getEncryptionFactor("https://mpc.v3e.org/requestPublicEncryptionFactor");
+
+    // LOCAL USE
     let publicKey = await getPublicKey("http://localhost:8080/requestPublicKey");
     let encryptionFactor = await getEncryptionFactor("http://localhost:8080/requestPublicEncryptionFactor");
-    let matchKey;
 
     let list=[];
     chrome.storage.local.get(['details'], async result => {
       if(result.details){
         list=JSON.parse(result.details);
-        list.forEach(async element => {
-          if(element.key === event.data.text){
+
+        list.forEach((element) => {
+          if(element.key === event.data.text) {
             matchKey = Number(element.value);
-          }
-        });
-        let encryptionData =  await getEncryptionData(publicKey, encryptionFactor, matchKey);
-        await sendEncryptionData(encryptionData);
+          }});
+
+        if(!matchKey){
+          matchKey = Math.floor(Math.random() * 100 + 1);
+        }
+            console.log('Match Key fetched: ' + matchKey);
+            let encryptionData =  await getEncryptionData(publicKey, encryptionFactor, matchKey);
+            await sendEncryptionData(encryptionData);
       }
     })
   }
 
   // Write match key to client
-  // TODO: double load from match key provider domain
   if (event.data.type && (event.data.type === "SET")) {
     let value=event.data.text;
     let intValue = Number(value)
@@ -42,7 +52,7 @@ window.addEventListener("message", async event => {
 
         let bool = true;
         for (const element of list) {
-          if(element.key === event.source.location.host){
+          if(element.key === event.source.origin){
             element.value = String(value);
             element.Timestamp = new Date();
             bool = false;
@@ -50,11 +60,12 @@ window.addEventListener("message", async event => {
         }
 
         if (bool) {
-          list.push({"key":event.source.location.host,"value":value,"Timestamp":new Date()})
+          list.push({"key":event.source.origin + "/","value":value,"Timestamp":new Date()})
         }
 
         chrome.storage.local.set({"details":JSON.stringify(list)}, function() {
           console.log('Value is set to ' + value);
+          alert("Match Key '" + value + "' set to the client from current website.")
         });
       }
     })
@@ -86,7 +97,7 @@ async  function sendEncryptionData(encryptionData) {
   let encryptedMatchKey = encryptionData[1];
   let encryptionDataJSON = {"clientKey":clientKey, "encryptedMatchKey": encryptedMatchKey}
 
-  var data={type: "RETURN_KEY", text:JSON.stringify(encryptionDataJSON)};
+  let data={type: "RETURN_KEY", text:JSON.stringify(encryptionDataJSON)};
   window.postMessage(data, "*");
+  alert("Match key '" + encryptedMatchKey + "' fetched from current website.")
 }
-
