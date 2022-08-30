@@ -29,4 +29,4 @@ The backend includes the web servers for the match key provider, the adtech and 
 The backend should be running locally accessible at http://localhost:8080/.
 
 ## Further reading
-Please refer to the [project report](https://github.com/effectLX/msc_ipa_prototype/blob/main/ProjectReport_CookieslessAttributionModelling.pdf) for further information on prototype design, usage and limitations. The latest discussions on the IPA protocol led by W3C and Meta/ Mozilla can be accessed [here](https://github.com/patcg/private-measurement).
+Please refer to the [project report](https://github.com/effectLX/msc_ipa_prototype/blob/main/project_report.pdf) for further information on prototype design, usage and limitations. The latest discussions on the IPA protocol led by W3C and Meta/ Mozilla can be accessed [here](https://github.com/patcg/private-measurement).
