@@ -1,6 +1,9 @@
 # IPA Prototype (M.Sc. Computing project)
 This is an initial implementation of the Interoperable Private Attribution (IPA) proposal published by Mozilla and Meta in January 2022. The prototype has been developed as part of an individual project at Imperial College London (M.Sc. Computing). The project is accessible locally (explained below) or [online for demonstration](https://simulation.v3e.org/) (Note: Demonstration requires Google Chrome extension).  
 
+## Amendment 04.09.2022
+Please note, an active ad blocker will block usage of the web application.
+
 ## Setup and installations
 #### 1. Clone the [prototype repository](https://github.com/effectLX/msc_ipa_prototype) to your local IDE
 #### 2. Setup the client component (Required for deployed prototype)
